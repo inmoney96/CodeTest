@@ -1,20 +1,21 @@
 #include <vector>
-#include <unordered_map>
+#include <set>
 using namespace std;
 
 int solution(vector<int> nums)
 {
-    unordered_map<int, int> map;
-    for (int i = 0; i < nums.size(); ++i)
+    int take = nums.size()/2;
+    set<int> po;
+    for(int i=0;i<nums.size();i++)
     {
-        map.insert({ nums[i], 1 });
+        po.insert(nums[i]);
     }
-    if (map.size() > (nums.size() / 2))
+    
+    if(po.size()>=take)
     {
-        return nums.size() / 2;
-    }
-    else
+        return take;
+    }else
     {
-        return map.size();
+        return po.size();
     }
 }
