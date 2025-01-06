@@ -1,53 +1,29 @@
 #include <string>
 #include <vector>
-
+#include <string>
+#include <algorithm>
 using namespace std;
 
 string solution(string s) {
-    string tmp = "";
-    int min = 0, max = 0;
-    int a = 0;
+    vector<int> nums;
 
-    for (int i = 0; i < s.size(); ++i)
+    string tmp;
+    for (int i = 0;i < s.size();i++)
     {
-        tmp.push_back(s[i]);
-        if (s[i] == ' ')
+        if(s[i] != ' ')
         {
-            a = stoi(tmp);
+            tmp = tmp + s[i];
+        }
+        else
+        {
+            int tmpnum = stoi(tmp);
+            nums.push_back(tmpnum);
             tmp.clear();
-            min = a;
-            max = a;
-            break;
         }
     }
+    int tmpnum = stoi(tmp);
+    nums.push_back(tmpnum);
+    sort(nums.begin(), nums.end());
 
-    for (int i = 0; i < s.size(); ++i)
-    {
-        tmp.push_back(s[i]);
-        if (s[i] == ' ')
-        {
-            a = stoi(tmp);
-            tmp.clear();
-            if (a < min) {
-                min = a;
-            }
-            if (a > max) {
-                max = a;
-            }
-        }
-    }
-
-    a = stoi(tmp);
-    if (a < min) {
-        min = a;
-    }
-    if (a > max) {
-        max = a;
-    }
-    tmp.clear();
-    tmp += to_string(min);
-    tmp += " ";
-    tmp += to_string(max);
-    return tmp;
-
+    return to_string(nums.front()) + " " + to_string(nums.back());
 }
