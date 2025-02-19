@@ -1,38 +1,32 @@
-#include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
 string solution(string s) {
-    string answer = "";
-    char tmp = ' ';
     bool isFirst = true;
-    for (int i = 0; i < s.size(); ++i)
+    for(int i =0;i<s.size();i++)
     {
-
-        if (97 <= s[i] && s[i] <= 122 && isFirst)
+        if(isFirst)
         {
-            tmp = s[i] - 32;
+            isFirst = false;
+            if(s[i] >= 97)
+            {
+                s[i] -= 32;
+            }
         }
-        else if (65 <= s[i] && s[i] <= 90 && !isFirst)
+        else
         {
-            tmp = s[i] + 32;
-        } else
-        {
-            tmp = s[i];
+            if(s[i] >= 65 && s[i] <= 90)
+            {
+            s[i] += 32;
+            }
         }
-
-        answer.push_back(tmp);
-
-        isFirst = false;
-
-        if (s[i] == ' ')
+        
+        if(s[i] == ' ')
         {
             isFirst = true;
         }
-
     }
-
-    return answer;
+    return s;
 }
