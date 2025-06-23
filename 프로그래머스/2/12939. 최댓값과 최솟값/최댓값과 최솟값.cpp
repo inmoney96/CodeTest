@@ -1,28 +1,35 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
 string solution(string s) {
-    string t;
-    vector<int> a;
+    vector<int> nums;
+    string tmp;
     for (int i = 0;i < s.size();i++)
     {
         if (s[i] != ' ')
         {
-            t += s[i];
+            tmp += s[i];
         }
         else
         {
-            a.push_back(stoi(t));
-            t.clear();
+            nums.push_back(stoi(tmp));
+            tmp.clear();
         }
     }
-    a.push_back(stoi(t));
-    t.clear();
+    nums.push_back(stoi(tmp));
 
-    sort(a.begin(), a.end());
-    t = to_string(a.front()) + " " + to_string(a.back());
-    return t;
+    sort(nums.begin(), nums.end());
+
+    string a = to_string(nums.front());
+    string b = to_string(nums.back());
+    string answer = a +" " + b;
+    return answer;
+}
+
+
+int main() {
+    solution("1 2 3 4");
+    return 0;
 }
