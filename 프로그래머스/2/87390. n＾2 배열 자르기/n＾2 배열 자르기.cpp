@@ -4,34 +4,38 @@
 using namespace std;
 
 vector<int> solution(int n, long long left, long long right) {
-    vector<int> answer(right - left + 1 , 0);
+    vector<int> answer;
 
-    long long a = left / n;
-    long long b = left % n;
-    long long x = 0;
-    int k = a;
-    for (long long i = a; i < n; i++)
-    {
-        k++;
-        for (long long j = 1; j <= n; j++)
-        {
-            
-            if (i == a && j <= b)
-                continue;
-            
-            if (j >= k)
-            {
-                answer[x] = j;
-            }
-            else 
-            {
-                answer[x] = k;
-            }
-            x++;
-            if (x >= right - left + 1)
-            {
-                return answer;
-            }
-        }
-    }
+    long long x = 1;
+	long long start = -1;
+	bool isRight = false;
+
+	for (long long i = 0; i < n; i++) {
+		for (long long j = 1; j <= n; j++) {
+			start++;
+			if (start < left)
+				continue;
+			if (start > right)
+			{
+				isRight = true;
+				break;
+			}
+
+			if (j < x)
+			{
+				answer.push_back(x);
+			}
+			else
+			{
+				answer.push_back(j);
+			}
+		}
+		if (isRight)
+		{
+			break;
+		}
+		x++;
+	}
+
+	return answer;
 }
