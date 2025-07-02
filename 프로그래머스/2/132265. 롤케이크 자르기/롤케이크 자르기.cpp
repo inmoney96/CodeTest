@@ -30,6 +30,5 @@ int solution(vector<int> topping) {
 			answer++;
 		}
 	}
-
     return answer;
 }
