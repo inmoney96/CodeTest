@@ -1,34 +1,41 @@
 #include <string>
 #include <vector>
-#include <stack>
+#include <map>
 
 using namespace std;
 
 int solution(vector<int> topping) {
     int answer = 0;
-	int l = 0, r = 0;
-    vector<stack<int>> LTopping(10001);
-    vector<stack<int>> RTopping(10001);
-
-    for (int i = 0; i < topping.size(); i++) {
-		if (RTopping[topping[i]].empty()) {
-			r++;
-		}
-        RTopping[topping[i]].push(topping[i]);
+    int l = 0, r = 0;
+    map<int,int> setA;
+    map<int,int> setB;
+    for(const auto v : topping)
+    {
+        if(setB[v] == 0)
+        {
+            r++;
+        }
+        setB[v]++;
     }
 
-	for (int i = 0; i < topping.size(); i++) {
-		RTopping[topping[i]].pop();
-		if (RTopping[topping[i]].empty()) {
-			r--;
-		}
-		if (LTopping[topping[i]].empty()) {
-			l++;
-		}
-		LTopping[topping[i]].push(topping[i]);
-		if (l == r) {
-			answer++;
-		}
-	}
+    for(const auto v : topping)
+    {
+        if(setA[v] == 0)
+        {
+            l++;
+        }
+        setA[v]++;
+        setB[v]--;
+        if(setB[v] == 0)
+        {
+            r--;
+        }
+
+        if(l == r)
+        {
+            answer++;
+        }
+    }
+
     return answer;
 }
