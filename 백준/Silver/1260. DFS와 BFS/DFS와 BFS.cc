@@ -4,65 +4,74 @@
 #include <algorithm>
 using namespace std;
 
-vector<int> graph[10001];
-vector<int> node;
-bool visited_dfs[1001];
-bool visited_bfs[1001];
+bool bIsVisited[1001];
 
-void dfs(int x) {
-
-	printf("%d ", x);
-	visited_dfs[x] = true;
-
-	for (int i = 0; i < graph[x].size(); i++) {
-		int y = graph[x][i];
-		if (!visited_dfs[y]) {
-			dfs(y);
+void dfs(const vector<vector<int>>& g, int s)
+{
+	bIsVisited[s] = true;
+	cout << s << " ";
+	for (int i = 0; i < g[s].size(); i++)
+	{
+		if (false == bIsVisited[g[s][i]])
+		{
+			dfs(g, g[s][i]);
 		}
+		
 	}
+
 }
 
-void bfs(int x) {
+void bfs(const vector<vector<int>>& g, int s)
+{
 	queue<int> q;
-	q.push(x);
-	visited_bfs[x] = true;
-
-	while (!q.empty()) {
-		int dx = q.front();
-		printf("%d ", dx);
+	bIsVisited[s] = true;
+	q.push(s);
+	while (false == q.empty())
+	{
+		int cur = q.front();
+		cout << cur << " ";
 		q.pop();
-
-		for (int i = 0; i < graph[dx].size(); i++) {
-			int dy = graph[dx][i];
-			if (!visited_bfs[dy]) {
-				visited_bfs[dy] = true;
-				q.push(dy);
+		
+		for (int i = 0; i < g[cur].size(); i++)
+		{
+			int next = g[cur][i];
+			if (false == bIsVisited[next])
+			{
+				bIsVisited[next] = true;
+				q.push(next);
 			}
 		}
 	}
+
 }
 
-int main() {
-	int N, M, V;
-	scanf("%d %d %d", &N, &M, &V);
+int main()
+{
+	int n, m, v;
+	cin >> n >> m >> v;
+	vector<vector<int>> g(1001, vector<int>());
 
-	//for (int i = 0; i <= N; i++) {
-	//	graph.push_back(node);
-	//}
 
-	for (int i = 1; i <= M; i++) {
-		int t1, t2;
-		scanf("%d %d", &t1, &t2);
-		graph[t1].push_back(t2);
-		graph[t2].push_back(t1);
+
+	for (int i = 0; i < m; i++)
+	{
+		int a, b;
+		cin >> a >> b;
+		g[a].push_back(b);
+		g[b].push_back(a);
 	}
 
-	for (int i = 1; i <= N; i++) {
-		sort(graph[i].begin(),graph[i].end());
+	for (int i = 1; i <= n; ++i) {
+		sort(g[i].begin(), g[i].end());
 	}
-	dfs(V);
-	printf("\n");
-	bfs(V);
+
+	dfs(g,v);
+	cout << endl;
+	for (int i = 0; i < 1001; i++)
+	{
+		bIsVisited[i] = false;
+	}
+	bfs(g, v);
 
 	return 0;
 }
